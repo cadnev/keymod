@@ -1,6 +1,19 @@
 cmake_minimum_required(VERSION 3.24)
+
 project(keyboard)
 
 set(CMAKE_CXX_STANDARD 17)
+
+SET(PROJ_TARGET keyboard)
+SET (PROJ_TARGET_LIB scanKeys)
+include_directories(include)
+set(SOURCE_LIST src/main.cpp
+        src/block.cpp
+        src/replace.cpp
+        src/configure.cpp)
+
+
 add_link_options(-static)
-add_executable(keyboard main.cpp)
+
+add_library(${PROJ_TARGET_LIB} SHARED src/scan_keys.cpp)
+add_executable(${PROJ_TARGET} ${SOURCE_LIST})
