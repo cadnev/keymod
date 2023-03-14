@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.24)
 
-project(keyboard)
+project(keymod)
 
 set(CMAKE_CXX_STANDARD 17)
 
-SET(PROJ_TARGET keyboard)
-SET (PROJ_TARGET_LIB scanKeys)
+SET(PROJ_TARGET keymod)
+SET (PROJ_TARGET_LIB hooks)
 
 include_directories(include)
 
@@ -21,3 +21,6 @@ add_link_options(-static)
 
 add_library(${PROJ_TARGET_LIB} SHARED ${SOURCE_LIST_LIB})
 add_executable(${PROJ_TARGET} ${SOURCE_LIST})
+
+set_target_properties(${PROJ_TARGET_LIB} PROPERTIES PREFIX "")
+

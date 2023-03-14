@@ -71,7 +71,7 @@ void add_blocking()
 {
     int current_vkCode;
 
-    static HINSTANCE hinstDLL = LoadLibrary(TEXT("libscanKeys.dll"));
+    static HINSTANCE hinstDLL = LoadLibrary(TEXT("hooks.dll"));
     if (hinstDLL == nullptr)
         std::cerr << "Some error while LoadLibrary: " << GetLastError() << '\n';
 
@@ -90,7 +90,7 @@ void add_reassignment()
     int replace1;
     int replace2;
 
-    static HINSTANCE hinstDLL = LoadLibrary(TEXT("libscanKeys.dll"));
+    static HINSTANCE hinstDLL = LoadLibrary(TEXT("hooks.dll"));
     if (hinstDLL == nullptr)
         std::cerr << "Some error while LoadLibrary: " << GetLastError() << '\n';
 
@@ -161,7 +161,7 @@ void write_configuration()
 
 void daemon_mode()
 {
-    static HINSTANCE hinstDLL = LoadLibrary(TEXT("libscanKeys.dll"));
+    static HINSTANCE hinstDLL = LoadLibrary(TEXT("hooks.dll"));
     if (hinstDLL == nullptr)
         std::cerr << "Some error while LoadLibrary: " << GetLastError() << '\n';
 
