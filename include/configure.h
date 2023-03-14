@@ -5,6 +5,7 @@
 #include <iostream>
 #include <windows.h>
 #include <fstream>
+#include <vector>
 
 #include "toml++/toml.h"
 

@@ -143,20 +143,17 @@ void write_configuration()
     {
         toml::table config;
 
-        if (!block_vkCode.empty())
-            config.insert_or_assign("block", block_vkCode);
-
-        if (!reassign_vkCode.empty())
-            config.insert_or_assign("reassign", reassign_vkCode);
+        config.insert_or_assign("block", block_vkCode);
+        config.insert_or_assign("reassign", reassign_vkCode);
 
         out << config;
         out.close();
 
-        std::cout << "Configuration saved.";
+        std::cout << "Configuration saved.\n";
     }
     else
     {
-        std::cerr << "Can't create configuration file.";
+        std::cerr << "Can't create configuration file.\n";
 
         return;
     }
@@ -164,5 +161,13 @@ void write_configuration()
 
 void daemon_mode()
 {
-    
+    static HINSTANCE hinstDLL = LoadLibrary(TEXT("libscanKeys.dll"));
+    if (hinstDLL == nullptr)
+        std::cerr << "Some error while LoadLibrary: " << GetLastError() << '\n';
+
+    HOOKPROC set_daemon_hooks = (HOOKPROC) GetProcAddress(hinstDLL, "set_daemon_hooks");
+    if (set_daemon_hooks == nullptr)
+        std::cerr << "Some error while GetProcAddress: " << GetLastError() << '\n';
+
+    set_daemon_hooks(0, 0, 0);
 }
