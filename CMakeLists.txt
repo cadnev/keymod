@@ -10,11 +10,9 @@ SET (PROJ_TARGET_LIB hooks)
 include_directories(include)
 
 set(SOURCE_LIST src/main.cpp
-        src/replace.cpp
         src/configure.cpp)
 
 set(SOURCE_LIST_LIB src/scan_keys.cpp
-        src/replace.cpp
         src/daemon_hooks.cpp)
 
 add_link_options(-static)

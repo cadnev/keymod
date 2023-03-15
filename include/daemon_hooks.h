@@ -2,10 +2,9 @@
 #define KEYBOARD_DAEMON_HOOKS_H
 
 #include <windows.h>
+#include <iostream>
 
 #include "toml++/toml.h"
-
-#include "replace.h"
 
 namespace hooks_vkCodes
 {
@@ -16,5 +15,7 @@ namespace hooks_vkCodes
 extern "C" __declspec(dllexport) void set_daemon_hooks();
 void parse_configuration();
 LRESULT CALLBACK BlockKeys(int iCode, WPARAM wParam, LPARAM lParam);
+LRESULT CALLBACK ReplaceKey(int iCode, WPARAM wParam, LPARAM lParam);
+void PressKey(int vkCode, WPARAM wParam);
 
 #endif //KEYBOARD_DAEMON_HOOKS_H
