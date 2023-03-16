@@ -11,6 +11,7 @@
 
 void conf_mode(int argc, char** argv);
 void daemon_mode();
+void autorun();
 void add_blocking();
 void add_reassignment();
 void print_configuration();
