@@ -4,8 +4,8 @@ project(keymod)
 
 set(CMAKE_CXX_STANDARD 17)
 
-SET(PROJ_TARGET keymod)
-SET (PROJ_TARGET_LIB hooks)
+set(PROJ_TARGET keymod)
+set(PROJ_TARGET_LIB hooks)
 
 include_directories(include)
 
