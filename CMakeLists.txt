@@ -6,8 +6,10 @@ set(CMAKE_CXX_STANDARD 17)
 
 set(PROJ_TARGET keymod)
 set(PROJ_TARGET_LIB hooks)
+set(LOGGER_PATH include/logger)
 
 include_directories(include)
+include_directories(${LOGGER_PATH}/include)
 
 set(SOURCE_LIST src/main.cpp
         src/configure.cpp)

@@ -81,11 +81,11 @@ void add_blocking()
 
     static HINSTANCE hinstDLL = LoadLibrary(TEXT("hooks.dll"));
     if (hinstDLL == nullptr)
-        std::cerr << "Some error while LoadLibrary: " << GetLastError() << '\n';
+        LOGF << "Some error while LoadLibrary: " << GetLastError() << '\n';
 
     HOOKPROC sethook = (HOOKPROC) GetProcAddress(hinstDLL, "sethook");
     if (sethook == nullptr)
-        std::cerr << "Some error while GetProcAddress: " << GetLastError() << '\n';
+        LOGF << "Some error while GetProcAddress: " << GetLastError() << '\n';
 
     std::cout << "Press the key to block: ";
 
@@ -100,11 +100,11 @@ void add_reassignment()
 
     static HINSTANCE hinstDLL = LoadLibrary(TEXT("hooks.dll"));
     if (hinstDLL == nullptr)
-        std::cerr << "Some error while LoadLibrary: " << GetLastError() << '\n';
+        LOGF << "Some error while LoadLibrary: " << GetLastError() << '\n';
 
     HOOKPROC sethook = (HOOKPROC) GetProcAddress(hinstDLL, "sethook");
     if (sethook == nullptr)
-        std::cerr << "Some error while GetProcAddress: " << GetLastError() << '\n';
+        LOGF << "Some error while GetProcAddress: " << GetLastError() << '\n';
 
     std::cout << "Replace key: ";
     replace1 = sethook(0, 0, 0);
@@ -140,7 +140,7 @@ void autorun()
         lresult = RegCreateKeyExA(
                 HKEY_LOCAL_MACHINE,
                 R"(Software\Microsoft\Windows\CurrentVersion\Run)",
-                NULL,
+                0,
                 "",
                 REG_OPTION_NON_VOLATILE,
                 KEY_SET_VALUE,
@@ -155,7 +155,7 @@ void autorun()
             lresult = RegSetValueEx(
                     hKey,
                     "keymod",
-                    NULL,
+                    0,
                     REG_SZ,
                     (LPBYTE)szPath,
                     strlen(szPath));
@@ -164,10 +164,10 @@ void autorun()
             if (lresult == ERROR_SUCCESS)
                 std::cout << "[+] Registry value written!\nAutorun enabled.\n";
             else
-                std::cout << "[x] Failure while setting value: " << lresult << '\n';
+                LOGF << "[x] Failure while setting value: " << lresult << '\n';
         }
         else
-            std::cout << "[x] Failure while creating key: " << lresult << '\n';
+            LOGF << "[x] Failure while creating key: " << lresult << '\n';
     }
     else if (lresult == ERROR_SUCCESS)
     {
@@ -182,7 +182,7 @@ void autorun()
         if (lresult == ERROR_SUCCESS)
             std::cout << "[+] Registry value deleted!\nAutorun disabled.\n";
         else
-            std::cout << "[x] Failure while deleting key value.\n";
+            LOGF << "[x] Failure while deleting key value.\n";
     }
 
     system("pause");
@@ -236,7 +236,7 @@ void write_configuration()
     }
     else
     {
-        std::cerr << "Can't create configuration file.\n";
+        LOGF << "Can't create configuration file.\n";
 
         return;
     }
@@ -246,11 +246,11 @@ void daemon_mode()
 {
     static HINSTANCE hinstDLL = LoadLibrary(TEXT("hooks.dll"));
     if (hinstDLL == nullptr)
-        std::cerr << "Some error while LoadLibrary: " << GetLastError() << '\n';
+        LOGF << "Some error while LoadLibrary:" << GetLastError() << '\n';
 
     HOOKPROC set_daemon_hooks = (HOOKPROC) GetProcAddress(hinstDLL, "set_daemon_hooks");
     if (set_daemon_hooks == nullptr)
-        std::cerr << "Some error while GetProcAddress: " << GetLastError() << '\n';
+        LOGF << "Some error while GetProcAddress: " << GetLastError() << '\n';
 
     set_daemon_hooks(0, 0, 0);
 }

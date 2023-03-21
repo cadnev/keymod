@@ -2,6 +2,8 @@
 
 void set_daemon_hooks()
 {
+    logger::init(logger::debug, logger::cout);
+
     parse_configuration();
 
     if (!hooks_vkCodes::block_vkCode.empty())
@@ -13,6 +15,8 @@ void set_daemon_hooks()
     MSG msg;
     BOOL bRet;
 
+    LOGW << "Hooks are configured!";
+
     while( (bRet = GetMessage( &msg, NULL, 0, 0 )) != 0)
     {
         TranslateMessage(&msg);
@@ -23,16 +27,23 @@ void set_daemon_hooks()
 void parse_configuration()
 {
     toml::parse_result config;
+    char szPath[0x100];
+    std::filesystem::path path;
+
+    GetModuleFileName(nullptr, szPath, sizeof(szPath));
+
+    path = szPath;
+    path = path.parent_path();
+    path /= "configuration.toml";
 
     try
     {
-        config = toml::parse_file( "configuration.toml" );
-
+        config = toml::parse_file(path.c_str());
     }
     catch (toml::v3::ex::parse_error&)
     {
-        std::cerr << "Configuration file was not found. To enter configuration mode, run .\\keyboard.exe -c or "
-                  << ".\\keyboard.exe --configure";
+        LOGF << "Configuration file (" << path << ") was not found.\nTo enter configuration mode, " <<
+            "run .\\keyboard.exe -c or .\\keyboard.exe --configure";
     }
 
     hooks_vkCodes::block_vkCode = *config["block"].as<toml::array>();
@@ -109,6 +120,6 @@ void PressKey(int vkCode, WPARAM wParam)
     UINT uSent = SendInput(ARRAYSIZE(inputs), inputs, sizeof(INPUT));
     if (uSent != ARRAYSIZE(inputs))
     {
-        std::cerr << L"SendInput failed: 0x" << HRESULT_FROM_WIN32(GetLastError()) << '\n';
+        LOGF << L"SendInput failed: 0x" << HRESULT_FROM_WIN32(GetLastError()) << '\n';
     }
 }

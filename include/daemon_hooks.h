@@ -3,8 +3,11 @@
 
 #include <windows.h>
 #include <iostream>
+#include <filesystem>
 
 #include "toml++/toml.h"
+#include "logger/log.hpp"
+#include "logger/initializers/console_appender_initializer.hpp"
 
 namespace hooks_vkCodes
 {

@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "toml++/toml.h"
+#include "logger/log.hpp"
 
 void conf_mode(int argc, char** argv);
 void daemon_mode();

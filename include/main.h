@@ -4,6 +4,9 @@
 #include <iostream>
 #include <windows.h>
 
+#include "logger/log.hpp"
+#include "logger/initializers/console_appender_initializer.hpp"
+
 #include "configure.h"
 
 #endif //KEYBOARD_MAIN_H

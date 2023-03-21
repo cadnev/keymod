@@ -2,6 +2,8 @@
 
 int main(int argc, char **argv)
 {
+    logger::init(logger::debug, logger::cout);
+
     if (argc > 1) {
         conf_mode(argc, argv);
     }
@@ -9,3 +11,4 @@ int main(int argc, char **argv)
         daemon_mode();
     return 0;
 }
+// TODO: скрывать окно при daemon_mode()
