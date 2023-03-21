@@ -10,13 +10,16 @@ void conf_mode(int argc, char **argv)
     for (int i = 0; i < argc; ++i)
     {
         auto arg = argv[i];
-        std::cout << arg;
         char* pch1;
         char* pch2;
         char* pch3;
+        char* pch4;
+
         pch1 = std::strstr(arg, "-c");
         pch2 = std::strstr(arg, "--configure");
         pch3 = std::strstr(arg, "--autorun");
+        pch4 = std::strstr(arg, "--daemon");
+
         if ((pch1 != nullptr) || (pch2 != nullptr))
         {
             isConfigure = true;
@@ -24,6 +27,8 @@ void conf_mode(int argc, char **argv)
         }
         else if (pch3 != nullptr)
             autorun();
+        else if (pch4 != nullptr)
+            start_no_window();
         else
             continue;
     }
@@ -123,6 +128,7 @@ void autorun()
 
     char szPath[0x100];
     GetModuleFileName(nullptr, szPath, sizeof(szPath));
+    strcat(szPath, " --daemon");
 
     lresult = RegGetValueA(
             HKEY_LOCAL_MACHINE,
@@ -240,6 +246,25 @@ void write_configuration()
 
         return;
     }
+}
+
+void start_no_window()
+{
+    STARTUPINFO si;
+    PROCESS_INFORMATION pi;
+
+    CreateProcessA(
+            nullptr,
+            "\"R:\\Roman\\aaa\\c++\\keyboard\\cmake-build-debug\\keymod.exe\"",
+            nullptr,
+            nullptr,
+            FALSE,
+            CREATE_NO_WINDOW,
+            nullptr,
+            nullptr,
+            &si,
+            &pi
+    );
 }
 
 void daemon_mode()
